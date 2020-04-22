@@ -1,5 +1,6 @@
 <?php
 
+namespace jackenhttp;
 class Curl{
     private static $instance;
 
