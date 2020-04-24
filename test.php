@@ -52,6 +52,8 @@ $curl = Curl::url('127.0.0.1/4.php')->send(['a'=>123])->put();
 $curl = Curl::url('127.0.0.1/4.php')->send(['a'=>123])->delete();
 
 //响应
+dump($curl); //所有响应
+
 $curl->code; //HTTP 响应状态码 0表示异常，可通过$curl->error，查看原因，其他为标准HTTP状态码
 $curl->body; //响应内容
 $curl->ResponseHeader;//响应头 数组

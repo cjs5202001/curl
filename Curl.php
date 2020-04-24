@@ -14,7 +14,7 @@ interface interfaceCurl{
 }
 class Curl implements interfaceCurl{
     /**
-     * 单例，PDO对象
+     * 单例，CURL对象
      *
      * @var object
      */
@@ -92,22 +92,30 @@ class Curl implements interfaceCurl{
         return $this;
     }
     
-    //POST方式
+    /**
+     * POST方式
+     */
     public function post(){ 
         return $this->execute('POST');
     }
     
-    //GET方式
+    /**
+     * GET方式
+     */
     public function get(){ 
         return $this->execute('GET');
     }
     
-    //PUT
+    /**
+     * PUT方式
+     */
     public function put(){
         return $this->execute('PUT');
     }
     
-    //DELETE
+    /**
+     * DELETE方式
+     */
     public function delete(){
         return $this->execute('DELETE');
     }
@@ -168,6 +176,11 @@ class Curl implements interfaceCurl{
             curl_setopt($ch, CURLOPT_POSTFIELDS,$fields);
         }
     }
+
+    /**
+     * 格式化URL参数
+     * @return string $fields
+     */
     private function urlStr($fields){
         return $fields = (is_array($fields)) ? http_build_query($fields) : $fields; 
     }
@@ -187,7 +200,10 @@ class Curl implements interfaceCurl{
         return (object) $response;
     }
 
-    //获取响应的Authorization
+    /**
+     * 获取响应的Authorization
+     * @return string
+     */
     private function Authorization($data){
         $Bearer = 'Authorization: Bearer';
         foreach($data as $key){
