@@ -1,16 +1,47 @@
 <?php
 
 namespace jackenhttp;
-class Curl{
+
+interface interfaceCurl{
+    public static function url($url);
+    public function send($data);
+    public function header($list);
+    public function time($time);
+    public function post();
+    public function get();
+    public function put();
+    public function delete();
+}
+class Curl implements interfaceCurl{
+    /**
+     * 单例，PDO对象
+     *
+     * @var object
+     */
     private static $instance;
 
+    /**
+     * 发送构造
+     *
+     * @param string $url 远程地址
+     * @param string $send 发送的数据，数组键值对:key：字段，value：数据；也可任意数据
+     * @param list $header 设置发送头
+     * @param string $time 设置默认30秒超时
+     */
     private $parameter = array(
-        'url' => '', //远程地址
-        'send' => '',//发送的数据，数组键值对:key：字段，value：数据；也可任意数据
-        'header' =>'', //设置发送头
-        'time' =>30 //设置默认30秒超时
+        'url' => '', 
+        'send' => '',
+        'header' =>'', 
+        'time' =>30 
     );
     
+    /**
+     * 静态方法，类实例化连接调用
+     *
+     * @access public
+     * @param string $url 设置url
+     * return pdo object
+     */
     public static function url($url){
         if (!self::$instance instanceof self) { 
             self::$instance = new Curl($url);
@@ -18,21 +49,45 @@ class Curl{
         return self::$instance;
     }
 
+    /**
+     * 构造函数，设置url
+     *
+     * @access private
+     * @param string $url 全局设置url 
+     */
     private function __construct($url){
          $this->parameter['url'] = $url;
     }
 
+    /**
+     * 请求
+     *
+     * @access public
+     * @param array $data 请求参数 
+     */
     public function send($data){
         $this->parameter['send'] = $data;
         return $this;
     }
 
+    /**
+     * 设置http header参数
+     *
+     * @access public
+     * @param array $list header参数
+     */
     public function header($list){
         $this->parameter['header'] = $list;
         return $this;
     }
 
-     public function time($time){
+    /**
+     * 设置超时时间
+     *
+     * @access public
+     * @param int $time 默认30秒
+     */
+    public function time($time){
         $this->parameter['time'] = $time;
         return $this;
     }
