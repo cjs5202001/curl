@@ -2,7 +2,7 @@
 ## 非常简洁的HTTP请求类
 符合RESTFull方式，支持请求方式如： GET, POST, PUT, PATCH, DELETE等几种，扩展方便
 
-** 调用方法：**
+**调用方法：**
 
 1：请求方法：get；post；put；delete （必填）
 
@@ -55,7 +55,7 @@ $curl = Curl::url('127.0.0.1/4.php')->send(['a'=>123])->put();
 $curl = Curl::url('127.0.0.1/4.php')->send(['a'=>123])->delete();
 ```
 
-** 返回方法：**
+**返回方法：**
 
 ```
 $curl->code; //HTTP 响应状态码 0表示异常，可通过$curl->error，查看原因，其他为标准HTTP状态码
