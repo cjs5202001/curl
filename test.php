@@ -3,7 +3,6 @@ require('Curl.php');
 
 use jackenhttp\Curl;
 
-
 //友好的格式化输出
 function dump($var, $exit = true) {
     echo '<pre>';
