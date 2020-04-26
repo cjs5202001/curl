@@ -33,6 +33,15 @@ class Curl implements interfaceCurl{
         'header' =>'', 
         'time' =>30 
     );
+
+    /**
+     * 重置参数
+     * 
+     */
+    private function reset(){
+        $this->parameter['send'] = '';
+        $this->parameter['header'] = '';
+    }
     
     /**
      * 静态方法，类实例化连接调用
@@ -45,17 +54,8 @@ class Curl implements interfaceCurl{
         if (!self::$instance instanceof self) { 
             self::$instance = new Curl($url);
         }
+        self::$instance->parameter['url'] = $url;
         return self::$instance;
-    }
-
-    /**
-     * 构造函数，设置url
-     *
-     * @access private
-     * @param string $url 全局设置url 
-     */
-    private function __construct($url){
-         $this->parameter['url'] = $url;
     }
 
     /**
@@ -64,7 +64,7 @@ class Curl implements interfaceCurl{
      * @access public
      * @param array $data 请求参数 
      */
-    public function send($data){
+    public function send($data=''){
         $this->parameter['send'] = $data;
         return $this;
     }
@@ -86,8 +86,10 @@ class Curl implements interfaceCurl{
      * @access public
      * @param int $time 默认30秒
      */
-    public function time($time){
-        $this->parameter['time'] = $time;
+    public function time($time=''){
+        if(!empty($time)){
+            $this->parameter['time'] = $time;
+        }
         return $this;
     }
     
@@ -165,15 +167,15 @@ class Curl implements interfaceCurl{
             $data = $this->curlHeader($ch,$result);
         }
         curl_close ($ch);
+        print_r($this->parameter);
+        $this->reset();
         return $data;
     }
 
     private function sendData($ch){
-        if($this->parameter['send']){
-            $fields = $this->urlStr($this->parameter['send']);
-            //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($fields)));
-            curl_setopt($ch, CURLOPT_POSTFIELDS,$fields);
-        }
+        $fields = $this->urlStr($this->parameter['send']);
+        //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Length: ' . strlen($fields)));
+        curl_setopt($ch, CURLOPT_POSTFIELDS,$fields);
     }
 
     /**
