@@ -167,7 +167,6 @@ class Curl implements interfaceCurl{
             $data = $this->curlHeader($ch,$result);
         }
         curl_close ($ch);
-        print_r($this->parameter);
         $this->reset();
         return $data;
     }
